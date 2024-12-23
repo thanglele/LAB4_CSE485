@@ -8,5 +8,9 @@ Route::get('/', function () {
 });
 
 // API routes for borrowing and returning books
-Route::post('/api/borrow', [BorrowController::class, 'newborrow']);
-//Route::put('/api/return/{id}', [BorrowController::class, 'returnBook']);
+Route::get('/borrow', function () {
+    return view('borrow');
+});
+Route::post('/api/newBorrow', [BorrowController::class, 'newborrow']);
+Route::put('/api/return/{id}', [BorrowController::class, 'returnBook']);
+Route::get('/api/listBorrow', [BorrowController::class,'listBorrow']);
