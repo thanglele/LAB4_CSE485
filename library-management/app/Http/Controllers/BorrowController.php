@@ -60,7 +60,7 @@ class BorrowController extends Controller
     }
 
     /*
-        API trả sách: URL: /api/returnBook
+        API trả sách: URL: /api/returnBook/{id}
         Method: PUT
         static = 0 là đang mượn
         static = 1 là đã trả
@@ -74,7 +74,32 @@ class BorrowController extends Controller
             $borrow->update(['status' => true, 'return_date' => now()]);
 
             $return->static_id = 200;
-            $return->message = 'Sách đã được trả thành công.';
+            $return->message = 'Book has returned sucessfully.';
+            return response() -> json($return, 200);
+        }
+        catch(\Exception $e){
+            $return->message = $e->getMessage();
+            $return->static_id = 500;
+            return response()->json($return, 500);
+        }
+    }
+
+    /*
+        API đổi lại trạng thái trả sách: URL: /api/editReturnBook/{id}
+        Method: PUT
+        static = 0 là đang mượn
+        static = 1 là đã trả
+     */
+    public function editReturnBook(Request $request, string $id)
+    {
+        $return = new BorrowReturn();
+        try
+        {
+            $borrow = Borrow::findOrFail($id);
+            $borrow->update(['status' => false, 'return_date' => now()]);
+
+            $return->static_id = 200;
+            $return->message = 'Change static returned book sucessfully.';
             return response() -> json($return, 200);
         }
         catch(\Exception $e){
