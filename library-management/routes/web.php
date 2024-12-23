@@ -17,3 +17,4 @@ Route::get('/api/listBorrow', [BorrowController::class,'listBorrow']);
 Route::get('/api/BorrowWithId/{id}', [BorrowController::class,'BorrowWithId']);
 Route::put('/api/editReturnBook/{id}', [BorrowController::class, 'editReturnBook']);
 Route::delete('/api/deleteBorrow/{id}', [BorrowController::class, 'deleteBorrow']);
+Route::put('/api/editBorrow/{id}', [BorrowController::class, 'editborrow']);
