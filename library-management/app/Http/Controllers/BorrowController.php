@@ -130,6 +130,24 @@ class BorrowController extends Controller
     }
 
     /*
+        API trả 1 thông tin sách mượn theo id: URL: /api/BorrowWithId/{id}
+        method: GET
+     */
+    public function BorrowWithId(Request $request, string $id){
+        $return = new BorrowReturn();
+        try{
+            $borrow = Borrow::findOrFail($id);
+
+            return response() -> json($borrow, 200);
+        }
+        catch(\Exception $e){
+            $return->message = $e->getMessage();
+            $return->static_id = 500;
+            return response()->json($return, 500);
+        }
+    }
+
+    /*
         API xóa thông tin sách mượn: URL: /api/deleteBorrow/{id}
         method: DELETE
      */
