@@ -128,5 +128,27 @@ class BorrowController extends Controller
             return response()->json($return, 500);
         }
     }
+
+    /*
+        API xóa thông tin sách mượn: URL: /api/deleteBorrow/{id}
+        method: DELETE
+     */
+    public function deleteBorrow(Request $request, string $id){
+        $return = new BorrowReturn();
+        try
+        {
+            $borrow = Borrow::findOrFail($id);
+            $borrow->Delete();
+
+            $return->static_id = 200;
+            $return->message = 'Delete Borrow book sucessfully.';
+            return response() -> json($return, 200);
+        }
+        catch(\Exception $e){
+            $return->message = $e->getMessage();
+            $return->static_id = 500;
+            return response()->json($return, 500);
+        }
+    }
     
 }
