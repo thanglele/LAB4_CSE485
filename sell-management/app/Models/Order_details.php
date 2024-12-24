@@ -3,12 +3,24 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 //Model Chi tiết đơn hàng
 class Order_details extends Model
 {
-    public $id;
-    public $order_id;
-    public $product_id;
-    public $quantity;
+    use HasFactory;
+
+    protected $fillable = ['order_id', 'product_id', 'quantity'];
+
+    // Quan hệ n-1 với bảng Orders
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_id');
+    }
+
+    // Quan hệ n-1 với bảng Products
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 }
