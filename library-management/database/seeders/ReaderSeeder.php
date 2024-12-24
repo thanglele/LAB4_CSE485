@@ -7,17 +7,16 @@ use Faker\Factory as Faker;
 class ReaderSeeder extends Seeder
 {
     public function run(): void
-   {
-       $faker = Faker::create();
-       
-       for($i = 0; $i < 20; $i++) {
-           Reader::create([
-               'name' => $faker->name,
-               //'email' => $faker->unique()->safeEmail,
-               'birthday' => $faker->date(),
-               'phone' => $faker->phoneNumber,
-               'address' => $faker->address,
-           ]);
-       }
-   }
+    {
+        $faker = Faker::create();
+
+        for ($i = 0; $i < 20; $i++) {
+            Reader::create([
+                'name' => $faker->name,
+                'birthday' => $faker->date(),
+                'phone' => $faker->phoneNumber,
+                'address' => $faker->address,
+            ]);
+        }
+    }
 }
