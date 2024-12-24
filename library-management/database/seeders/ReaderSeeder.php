@@ -12,10 +12,10 @@ class ReaderSeeder extends Seeder
 
         for ($i = 0; $i < 20; $i++) {
             Reader::create([
-                'name' => $faker->name,
-                'birthday' => $faker->date(),
-                'phone' => $faker->phoneNumber,
-                'address' => $faker->address,
+                'name' => $faker->name, //ten ngau nhien
+                'birthday' => $faker->date(), //ngay sinh ngau nhien
+                'phone' => $faker->phoneNumber, //so dien thoai ngau nhien
+                'address' => $faker->address,//dia chi ngau nhien
             ]);
         }
     }
