@@ -15,6 +15,6 @@ class Customers extends Model
     // Quan hệ 1-n với bảng Orders
     public function orders()
     {
-        return $this->hasMany(Order::class, 'customer_id');
+        return $this->hasMany(Orders::class, 'customer_id');
     }
 }
