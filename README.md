@@ -14,6 +14,7 @@ php artisan db:seed
 Khi chạy thành công các lệnh bên trên thì bắt đầu có thể code bình thường.
 Khởi động WebServer bằng lệnh: php artisan serve
 URL: http://127.0.0.1:8000/
+
 ==========================================================================
 Với bài tập số 2 có tên là Sell-management:
 Điều chỉnh thông tin kết nối file .env trước khi chạy lệnh cài đặt
@@ -29,5 +30,6 @@ php artisan db:seed
 Khi chạy thành công các lệnh bên trên thì bắt đầu có thể code bình thường.
 Khởi động WebServer bằng lệnh: php artisan serve
 URL: http://127.0.0.1:8000/
+
 ==========================================================================
 Cảm ơn vì đã đọc.
