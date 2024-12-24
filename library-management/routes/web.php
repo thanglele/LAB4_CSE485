@@ -15,6 +15,7 @@ Route::get('/', function () {
 Route::get('/borrow', function () {
     return view('borrow');
 });
+
 Route::get('/reader', function () {
     return view('reader');
 });
