@@ -15,8 +15,8 @@ class Products extends Model
     // Quan hệ n-n với bảng Orders thông qua bảng OrderDetails
     public function orders()
     {
-        return $this->belongsToMany(Order::class, 'order_details', 'product_id', 'order_id')
-                    ->withPivot('quantity')
-                    ->withTimestamps();
+        return $this->belongsToMany(Orders::class, 'order_details', 'product_id', 'order_id')
+            ->withPivot('quantity')
+            ->withTimestamps();
     }
 }
