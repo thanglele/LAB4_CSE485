@@ -8,18 +8,21 @@ use App\Models\Book;
 use Faker\Factory as Faker;
 class BookSeeder extends Seeder
 {
-   public function run(): void
-   {
-       $faker = Faker::create();
-       
-       for($i = 0; $i < 50; $i++) {
-           Book::create([
-                'name' => $faker->name,
-               'author' => $faker->name,
-               'category' => $faker->name,
-               'year' => $faker->year,
-               'quantity' => $faker->numberBetween(1, 20),
-           ]);
-       }
-   }
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $faker = Faker::create();
+
+        foreach (range(1, 100) as $index) {
+            Book::created([
+                'name' => $faker->sentence(3),
+                'author' => $faker->name,
+                'category' => $faker->randomElement(['Fiction', 'Non-Fiction', 'Science', 'History', 'Biography']),
+                'year' => $faker->year($max = 'now'),
+                'quantity' => $faker->numberBetween(1, 100),
+            ]);
+        }
+    }
 }

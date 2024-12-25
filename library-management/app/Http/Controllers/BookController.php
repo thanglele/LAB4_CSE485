@@ -8,59 +8,98 @@ use App\Models\Book;
 class BookController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the books.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
         $books = Book::all();
-        return view('books.index', compact('books'));
+        return response()->json($books);
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Store a newly created book in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'author' => 'required|string|max:255',
+            'category' => 'required|string|max:255',
+            'year' => 'required|integer',
+            'quantity' => 'required|integer',
+        ]);
+
+        $book = Book::create($validatedData);
+
+        return response()->json(['message' => 'Book created successfully!', 'book' => $book], 201);
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified book.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $book = Book::find($id);
+
+        if (!$book) {
+            return response()->json(['message' => 'Book not found'], 404);
+        }
+
+        return response()->json($book);
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Update the specified book in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function edit(string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $book = Book::find($id);
+
+        if (!$book) {
+            return response()->json(['message' => 'Book not found'], 404);
+        }
+
+        $validatedData = $request->validate([
+            'name' => 'sometimes|required|string|max:255',
+            'author' => 'sometimes|required|string|max:255',
+            'category' => 'sometimes|required|string|max:255',
+            'year' => 'sometimes|required|integer',
+            'quantity' => 'sometimes|required|integer',
+        ]);
+
+        $book->update($validatedData);
+
+        return response()->json(['message' => 'Book updated successfully!', 'book' => $book]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Remove the specified book from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, string $id)
+    public function destroy($id)
     {
-        //
-    }
+        $book = Book::find($id);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        if (!$book) {
+            return response()->json(['message' => 'Book not found'], 404);
+        }
+
+        $book->delete();
+
+        return response()->json(['message' => 'Book deleted successfully!']);
     }
 }
