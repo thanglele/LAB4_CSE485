@@ -22,6 +22,7 @@
                     <td>{{ $customer->name }}</td>
                     <td>{{ $customer->email }}</td>
                     <td>
+                        <a href="{{ route('customers.show', $customer->id) }}" class="btn btn-sm btn-warning">Show</a>
                         <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-sm btn-warning">Edit</a>
                         <form action="{{ route('customers.destroy', $customer->id) }}" method="POST" class="d-inline">
                             @csrf

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 //Model Khách hàng
-class Customers extends Model
+class Customer extends Model
 {
     use HasFactory;
 

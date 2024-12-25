@@ -32,7 +32,7 @@ class CustomerController extends Controller
         $request->validate([
             'name' => 'required',
             'address' => 'required',
-            'phone' => 'required|digits:10',
+            'phone' => 'required',
             'email' => 'required|email|unique:customers,email',
         ]);
 
@@ -44,9 +44,9 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Customer $customer)
     {
-        //
+        return view('customers.show', compact('customer'));
     }
 
     /**
@@ -66,7 +66,7 @@ class CustomerController extends Controller
         $request->validate([
             'name' => 'required',
             'address' => 'required',
-            'phone' => 'required|digits:10',
+            'phone' => 'required',
             'email' => 'required|email|unique:customers,email,' . $id,
         ]);
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Orders;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
@@ -10,7 +10,7 @@ class OrdersController extends Controller
     // Display a listing of the orders
     public function index()
     {
-        $orders = Orders::all();
+        $orders = Order::all();
         return view('orders.index', compact('orders'));
     }
 
@@ -38,14 +38,14 @@ class OrdersController extends Controller
     // Display the specified order
     public function show($id)
     {
-        $order = Orders::find($id);
+        $order = Order::find($id);
         return view('orders.show', compact('order'));
     }
 
     // Show the form for editing the specified order
     public function edit($id)
     {
-        $order = Orders::find($id);
+        $order = Order::find($id);
         return view('orders.edit', compact('order'));
     }
 
@@ -58,7 +58,7 @@ class OrdersController extends Controller
             'status' => 'required|string|max:255',
         ]);
 
-        $order = Orders::find($id);
+        $order = Order::find($id);
         $order->update($request->all());
 
         return redirect()->route('orders.index')
@@ -68,7 +68,7 @@ class OrdersController extends Controller
     // Remove the specified order from storage
     public function destroy($id)
     {
-        $order = Orders::find($id);
+        $order = Order::find($id);
         $order->delete();
 
         return redirect()->route('orders.index')

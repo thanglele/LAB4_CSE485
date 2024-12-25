@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 //Model Chi tiết đơn hàng
-class Order_details extends Model
+class Order_detail extends Model
 {
     use HasFactory;
 
@@ -15,12 +15,12 @@ class Order_details extends Model
     // Quan hệ n-1 với bảng Orders
     public function order()
     {
-        return $this->belongsTo(Orders::class, 'order_id');
+        return $this->belongsTo(Order::class, 'order_id');
     }
 
     // Quan hệ n-1 với bảng Products
     public function product()
     {
-        return $this->belongsTo(Products::class, 'product_id');
+        return $this->belongsTo(Product::class, 'product_id');
     }
 }
