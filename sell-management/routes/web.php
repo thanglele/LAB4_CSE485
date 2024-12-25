@@ -2,11 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CustomerController;
 
 Route::get('/', function () {
-    return view('welcome');
-});
-
+    return view('dashboard');
+})->name('dashboard');
 Route::resource('products', ProductController::class);
-
-//Route::put('/products/store', [ProductController::class, 'store']);
+Route::resource('customers', CustomerController::class);
+Route::resource('orders', OrderController::class);
