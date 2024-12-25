@@ -15,12 +15,12 @@ class Orders extends Model
     // Quan hệ n-1 với bảng Customers
     public function customer()
     {
-        return $this->belongsTo(Customer::class, 'customer_id');
+        return $this->belongsTo(Customers::class, 'customer_id');
     }
 
     // Quan hệ 1-n với bảng OrderDetails
     public function orderDetails()
     {
-        return $this->hasMany(OrderDetail::class, 'order_id');
+        return $this->hasMany(Order_details::class, 'order_id');
     }
 }
