@@ -3,78 +3,85 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Products;
 
 class ProductController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        $products = Products::all();
+        $products = Product::all();
         return view('products.index', compact('products'));
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
         return view('products.create');
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        try{
-            $request->validate([
-                'name' => 'required',
-                'price' => 'required',
-            ]);
+        $validated = $request->validate([
+            'name' => 'required',
+            'description' => 'nullable',
+            'price' => 'required|numeric',
+            'quantity' => 'required|integer',
+        ]);
 
-            Products::create($request->all());
-
-            //return response()->json(['success' => 'Product created successfully.'], 200);
-            return redirect()->route('products.index')->with('success', 'Product created successfully.');
-        }
-        catch (\Exception $e){
-            return response()->json(['messeges', $e->getMessage()],500);
-        }
+        Product::create($validated);
+        return redirect()->route('products.index');
     }
 
-    public function show(Products $product)
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
     {
-        return view('products.show', compact('product'));
+        //
     }
 
-    public function edit(Products $product)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
     {
+        $product = Product::findOrFail($id);
         return view('products.edit', compact('product'));
     }
 
-    public function update(Request $request, $id)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
     {
-        try
-        {
-            $request->validate([
-                'name' => 'required',
-                'price' => 'required',
-            ]);
-            Products::findOrFail($id)->update($request->all());
+        $validated = $request->validate([
+            'name' => 'required',
+            'description' => 'nullable',
+            'price' => 'required|numeric',
+            'quantity' => 'required|integer',
+        ]);
 
-            return redirect()->route('products.index')
-            ->with('success', 'Product updated successfully');
-        }
-        catch (\Exception $e){
-            return response()->json(['messeges', $e->getMessage()],500);
-        }
+        $product = Product::findOrFail($id);
+        $product->update($validated);
+
+        return redirect()->route('products.index');
     }
 
-    public function destroy($id)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
     {
-        try
-        {
-            Products::findOrFail($id)->delete();
+        $product = Product::findOrFail($id);
+        $product->delete();
 
-            return redirect()->route('products.index')
-            ->with('success', 'Product deleted successfully');
-        }
-        catch (\Exception $e){
-            return response()->json(['messeges', $e->getMessage()],500);
-        }
+        return redirect()->route('products.index');
     }
 }
