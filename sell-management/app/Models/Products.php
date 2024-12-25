@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 //Models Sản phẩm
 class Products extends Model
 {
+
     use HasFactory;
 
     protected $fillable = ['name', 'description', 'price', 'quantity'];
@@ -19,4 +20,11 @@ class Products extends Model
             ->withPivot('quantity')
             ->withTimestamps();
     }
+
+    public $id;
+    public $name;
+    public $description;
+    public $price;
+    public $quantity;
+
 }

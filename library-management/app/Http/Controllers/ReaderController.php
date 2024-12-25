@@ -31,17 +31,16 @@ class ReaderController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $request = $request->validate([
             'name' => 'required',
-            'email' => 'required|email',
+            'birthday' => 'required|Date',
             'phone' => 'required',
             'address' => 'required',
         ]);
-
-        Reader::create($request->all());
-
-        return redirect()->route('readers.index')
-            ->with('success', 'Reader created successfully.');
+    
+        Reader::create($request);
+    
+        return redirect()->route('readers.index')->with('success', 'Reader created successfully.');
     }
 
     /**
@@ -67,7 +66,7 @@ class ReaderController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required|email',
+            'birthday' => 'required|date',
             'phone' => 'required',
             'address' => 'required',
         ]);

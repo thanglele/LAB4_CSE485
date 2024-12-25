@@ -13,7 +13,7 @@ class Reader extends Model
     // Define the fillable attributes
     protected $fillable = [
         'name',
-        'email',
+        'birthday',
         'phone',
         'address',
     ];
