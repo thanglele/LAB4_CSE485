@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 //Models Sản phẩm
 class Products extends Model
 {
+    protected $fillable = [
+        'name',
+        'description',
+        'price',
+        'quantity',
+    ];
+
     public $id;
     public $name;
     public $description;
