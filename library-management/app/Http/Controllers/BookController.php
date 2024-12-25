@@ -15,7 +15,12 @@ class BookController extends Controller
     public function index()
     {
         $books = Book::all();
-        return response()->json($books);
+        return view('books.index', compact('books'));
+    }
+
+    public function create()
+    {
+        return view('books.create');
     }
 
     /**
@@ -36,7 +41,7 @@ class BookController extends Controller
 
         $book = Book::create($validatedData);
 
-        return response()->json(['message' => 'Book created successfully!', 'book' => $book], 201);
+        return redirect()->route('books.index')->with('success', 'Book created successfully.');
     }
 
     /**
@@ -52,8 +57,7 @@ class BookController extends Controller
         if (!$book) {
             return response()->json(['message' => 'Book not found'], 404);
         }
-
-        return response()->json($book);
+        return view('books.show', compact('book'));
     }
 
     /**
@@ -81,8 +85,15 @@ class BookController extends Controller
 
         $book->update($validatedData);
 
-        return response()->json(['message' => 'Book updated successfully!', 'book' => $book]);
+        return redirect()->route('books.index')->with('success', 'Book updated successfully.');
     }
+
+    public function edit(string $id)
+    {
+        $book = Book::findOrFail($id);
+        return view('books.edit', compact('book'));
+    }
+
 
     /**
      * Remove the specified book from storage.
@@ -95,11 +106,11 @@ class BookController extends Controller
         $book = Book::find($id);
 
         if (!$book) {
-            return response()->json(['message' => 'Book not found'], 404);
+            return redirect()->route('books.index')->with('success', 'Book not found.');
         }
 
         $book->delete();
 
-        return response()->json(['message' => 'Book deleted successfully!']);
+        return redirect()->route('books.index')->with('success', 'Book deleted successfully.');
     }
 }

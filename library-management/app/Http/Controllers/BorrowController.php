@@ -18,10 +18,11 @@ class BorrowController extends Controller
     /**
      * Display a listing of the resource.
      */
-    // public function index()
-    // {
-    //     //
-    // }
+    public function index()
+    {
+        $borrows = Borrow::all();
+        return view('borrows.index', compact('borrows'));
+    }
 
     /*
     {
@@ -82,6 +83,14 @@ class BorrowController extends Controller
             $return->static_id = 500;
             return response()->json($return, 500);
         }
+    }
+
+    public function edit($id)
+    {
+        $borrow = Borrow::findOrFail($id);
+        $books = Book::all();
+        $readers = Reader::all();
+        return view('borrows.edit', compact('borrow', 'books', 'readers'));
     }
 
     /*
@@ -174,6 +183,37 @@ class BorrowController extends Controller
         }
     }
 
+    public function update(Request $request, string $id)
+    {
+        $return = new BorrowReturn();
+        $request-> validate([
+            'reader_id'=> 'required',
+            'book_id' => 'required',
+            'borrow_date'=> 'required',
+            'return_date'=> 'required',
+            'status'=> 'required',
+        ]);
+
+        try{
+            $borrow = Borrow::findOrFail($id);
+            $borrow->update(['reader_id' => $request->input('reader_id'),
+                            'book_id' => $request->input('book_id'),
+                            'borrow_date' => $request->input('borrow_date'),
+                            'return_date' => $request->input('return_date'),
+                            'status' => $request->input('status'),
+                            'updated_at' => now(),]);
+
+            $return->static_id = 200;
+            $return->message = 'Thông tin sách mượn đã được cập nhật thành công.';
+            return redirect()->route('borrows.index')->with('success', 'Borrow updated successfully.');
+        }
+        catch(\Exception $e){
+            $return->message = $e->getMessage();
+            $return->static_id = 500;
+            return response()->json($return, 500);
+        }
+    }
+
     /*
         API trả 1 thông tin sách mượn theo id: URL: /api/BorrowWithId/{id}
         method: GET
@@ -191,6 +231,10 @@ class BorrowController extends Controller
             return response()->json($return, 500);
         }
     }
+    public function Show($id){
+        $borrow = Borrow::findOrFail($id);
+        return view('borrows.show', compact('borrow'));
+    }
 
     /*
         API xóa thông tin sách mượn: URL: /api/deleteBorrow/{id}
@@ -206,6 +250,24 @@ class BorrowController extends Controller
             $return->static_id = 200;
             $return->message = 'Delete Borrow book sucessfully.';
             return response() -> json($return, 200);
+        }
+        catch(\Exception $e){
+            $return->message = $e->getMessage();
+            $return->static_id = 500;
+            return response()->json($return, 500);
+        }
+    }
+
+    public function destroy(string $id){
+        $return = new BorrowReturn();
+        try
+        {
+            $borrow = Borrow::findOrFail($id);
+            $borrow->Delete();
+
+            $return->static_id = 200;
+            $return->message = 'Delete Borrow book sucessfully.';
+            return redirect()->route('borrows.index')->with('success', 'Borrow deleted successfully.');
         }
         catch(\Exception $e){
             $return->message = $e->getMessage();
